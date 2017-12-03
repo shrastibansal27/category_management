@@ -63,6 +63,7 @@ class CategoryController extends Controller
             $cat_arr[] = $category_data;
             $cat_json = json_encode($cat_arr);
             Storage::put('category.json',$cat_json);
+            return redirect()->back();
         } else{
             $get = Storage::get('category.json');
             $cat_arr  = json_decode($get);
@@ -72,12 +73,13 @@ class CategoryController extends Controller
                  $cat_arr[] = $category_data;
                  $cat_json = json_encode($cat_arr);
                  Storage::put('category.json',$cat_json);
+                  return redirect()->back();
             } else{
                 return redirect()->back()->with('error', 'Please provide unique category name');
             }
         }
 
-        return redirect()->back();
+
     }
 
      public function catValidation($cat_arr,$string)

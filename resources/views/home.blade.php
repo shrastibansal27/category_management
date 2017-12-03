@@ -127,8 +127,8 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Sub-Category</h4>
             </div>
-            <div class="modal-body subcat">
-
+            <div class="modal-body">
+            <p class="catid"></p>
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -179,25 +179,26 @@ $(document).ready(function(){
     $(".feed-id").click(function(e){
         e.preventDefault();
         var catname = $(this).attr('data-id');
-        var html='';
-        $.ajax({type:"GET",url: "{{url('/subcatlist')}}",data:{"token":"{{csrf_token()}}","catname":catname}, success: function(result){
 
+        $.ajax({type:"GET",url: "{{url('/subcatlist')}}",data:{"token":"{{csrf_token()}}","catname":catname}, success: function(result){
             var modal = $(this)
             for (var i = 0; i < result.length; i++){
             var name = result[i];
-            console.log(name);
-            html += '<li>'+name+ '</li>'
-           // $("#viewsubCatModal" ).find(".modal-body subcat #subcatid").val(name);
-            $('#viewsubCatModal').modal().on('show.bs.modal', function (e) {
-            //$(".modal-body subcat").html(html);
-            modal.find('.modal-body li').val(name)
-            });
+            $('#viewsubCatModal').find('.modal-body .catid' ).append('<li>'+name+ '</li>');
+
         }
-           $('#viewsubCatModal').modal('show');
 
+        $('#viewsubCatModal').modal('show');
+        $("#viewsubCatModal").on("hide.bs.modal", function(){
+        $(".modal-body .catid").html("");
+        });
 
+        },
+        error: function (e) {
+                alert('error');
+            }
+    });
 
-        }});
     });
 });
 

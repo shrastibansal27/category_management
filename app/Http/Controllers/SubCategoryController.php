@@ -50,6 +50,7 @@ class SubCategoryController extends Controller
             $subcat_arr[] = $subcategory_data;
             $subcat_json = json_encode($subcat_arr);
             Storage::put('subcategory.json',$subcat_json);
+            return redirect()->back();
         }else{
             $get = Storage::get('subcategory.json');
             $subcat_arr  = json_decode($get);
@@ -59,11 +60,12 @@ class SubCategoryController extends Controller
                $subcat_arr[] = $subcategory_data;
                $subcat_json = json_encode($subcat_arr);
                Storage::put('subcategory.json',$subcat_json);
+               return redirect()->back();
             }else{
                 return redirect()->back()->with('error', 'Please provide unique sub-category name');
             }
         }
-        return redirect()->back();
+
     }
 
 
